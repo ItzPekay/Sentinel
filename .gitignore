@@ -1,0 +1,96 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# ML artifacts
+**/*.pkl
+**/*.joblib
+**/*.h5
+**/*.pt
+**/*.pth
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# Type checking / linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Firebase credentials (both naming conventions)
+serviceAccountKey.json
+service_account_key.json
+
+# Generated camera assets
+**/assets/snapshot.*
+
+# Temporary audio uploads
+**/temp_audio/
+
+# Audio files written at runtime (e.g. voice_recognition.py test.wav)
+*.wav
+*.mp3
+*.m4a
+*.ogg
+
+# Logs
+*.log
+logs/
+
+# AI assistant config / context files
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.cursor/
+.copilot/
+.aider*
+.continue/
+.superpowers/
+.claude/
+
+# Docs / markdown
+README.md
+docs/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+
+# Frontend env
+frontend/.env.local
+frontend/.env*.local

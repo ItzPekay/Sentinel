@@ -1,0 +1,135 @@
+@import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #FDF8F3;
+    --foreground: #1C1410;
+    --card: #FFFFFF;
+    --card-foreground: #1C1410;
+    --primary: #E85D04;
+    --primary-foreground: #FFFFFF;
+    --muted: #F9F5F0;
+    --muted-foreground: #57534E;
+    --border: #E8DDD5;
+    --input: #FDF5EE;
+    --ring: #E85D04;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-warm-border;
+  }
+
+  body {
+    @apply bg-cream text-charcoal font-sans antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-playfair;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: #FDF8F3; }
+  ::-webkit-scrollbar-thumb { background: #E8DDD5; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #E85D04; }
+}
+
+@layer utilities {
+  .bg-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .bg-glass-dark {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .border-glow-electric {
+    border: 1px solid rgba(232, 93, 4, 0.20);
+    box-shadow: 0 0 24px rgba(232, 93, 4, 0.08), inset 0 0 24px rgba(232, 93, 4, 0.02);
+  }
+  .border-glow-sky {
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    box-shadow: 0 0 24px rgba(14, 165, 233, 0.10), inset 0 0 24px rgba(14, 165, 233, 0.03);
+  }
+  .border-glow-cyan {
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    box-shadow: 0 0 24px rgba(14, 165, 233, 0.10);
+  }
+  .border-glow-violet {
+    border: 1px solid rgba(124, 58, 237, 0.22);
+    box-shadow: 0 0 24px rgba(124, 58, 237, 0.08);
+  }
+  .border-glow-red {
+    border: 1px solid rgba(220, 38, 38, 0.30);
+    box-shadow: 0 0 24px rgba(220, 38, 38, 0.12);
+  }
+  .text-gradient-electric {
+    background: linear-gradient(135deg, #E85D04 0%, #D97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #1C1410 0%, #E85D04 60%, #D97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #7C3AED 0%, #E85D04 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-neural-dots {
+    background-image: radial-gradient(circle, rgba(232, 93, 4, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .glow-text-electric {
+    text-shadow: 0 0 30px rgba(232, 93, 4, 0.4);
+  }
+  .ecg-line-electric {
+    stroke: #E85D04;
+    stroke-width: 2.5;
+    fill: none;
+    filter: drop-shadow(0 0 5px rgba(232, 93, 4, 0.7));
+  }
+  .ecg-line-glow {
+    stroke: #D97706;
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.4;
+    filter: drop-shadow(0 0 8px rgba(217, 119, 6, 0.9));
+  }
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(232,93,4,0.15);
+  }
+}
+
+/* ECG draw-in animation for SVG paths */
+@keyframes ecg-draw-in {
+  from { stroke-dashoffset: 800; opacity: 0; }
+  10% { opacity: 1; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+.animate-ecg-draw-in {
+  stroke-dasharray: 800;
+  animation: ecg-draw-in 1.8s ease-out forwards;
+}
+
+/* Live indicator blink */
+@keyframes live-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(5, 150, 105, 0.7); }
+  50% { opacity: 0.2; box-shadow: none; }
+}
+.animate-live { animation: live-blink 1.2s ease-in-out infinite; }
