@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Camera, Scan, RefreshCw } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { api } from "@/lib/api"
@@ -8,6 +9,7 @@ import { FaceScanIllustration } from "@/components/illustrations/FaceScanIllustr
 import { clsx } from "clsx"
 
 export default function CameraPage() {
+  const router = useRouter()
   const [snapshot, setSnapshot] = useState<string | null>(null)
   const [detection, setDetection] = useState<PredictionResponse | null>(null)
   const [streamError, setStreamError] = useState(false)
@@ -32,6 +34,9 @@ export default function CameraPage() {
     try {
       const result = await api.predict.run()
       setDetection(result)
+      if (result.confidence > 0.7) {
+        router.push("/emergency-check")
+      }
     } catch (e) {
       alert(e instanceof Error ? e.message : "Detection failed.")
     } finally {
@@ -72,7 +77,7 @@ export default function CameraPage() {
             <FaceScanIllustration size={180} />
             <div className="text-center">
               <p className="font-playfair text-xl text-[#1C1410]">Camera offline</p>
-              <p className="text-sm text-gray-warm mt-1">Pi server unreachable — check your connection</p>
+              <p className="text-sm text-gray-warm mt-1">Pi server unreachable. Check your connection.</p>
             </div>
             <button onClick={() => setStreamError(false)}
               className="flex items-center gap-2 rounded-full border border-warm-border bg-white px-4 py-2 text-sm text-gray-warm hover:text-[#1C1410] hover:border-[#0EA5E9]/40 transition-all">

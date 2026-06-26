@@ -13,11 +13,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="relative z-10 flex flex-col h-full p-10">
           {/* Logo */}
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#E85D04] to-[#C2410C] flex items-center justify-center shadow-glow">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Sentinel" width={40} height={40} className="object-contain flex-shrink-0" />
             <div>
               <p className="font-playfair text-xl font-bold text-[#1C1410]">Sentinel</p>
               <p className="text-[9px] font-semibold uppercase tracking-widest text-gray-warm">Stroke Predictor</p>
@@ -31,7 +28,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <span className="text-gradient-electric">who matter most.</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-gray-warm max-w-sm">
-              Sentinel watches over your loved ones using AI — monitoring speech patterns,
+              Sentinel watches over your loved ones using AI, monitoring speech patterns,
               camera feeds, and blood glucose in real time.
             </p>
 

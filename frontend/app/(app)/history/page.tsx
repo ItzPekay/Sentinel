@@ -184,7 +184,7 @@ export default function HistoryPage() {
                         <div className="flex items-center gap-3">
                           {gZone && <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: gZone.color }} />}
                           <span className="font-mono text-2xl font-bold" style={{ color: gZone?.color ?? "#7C3AED" }}>
-                            {g.blood_sugar_reading ?? "—"}
+                            {g.blood_sugar_reading ?? "N/A"}
                           </span>
                           <span className="text-sm text-gray-warm">mg/dL</span>
                           {gZone && <span className="text-xs font-semibold" style={{ color: gZone.color }}>{gZone.label}</span>}

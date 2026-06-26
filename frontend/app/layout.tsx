@@ -21,7 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sentinel — Stroke Detection",
+  title: "Sentinel: Stroke Detection",
   description: "Your health, watched over. AI-powered stroke monitoring for you and your family.",
 };
 

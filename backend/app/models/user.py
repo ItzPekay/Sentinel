@@ -17,10 +17,12 @@ class UserOut(BaseModel):
     user_id: str
     email: str
     name: str
+    emergency_contact_email: Optional[str] = None
 
 
 class UserProfileUpdate(BaseModel):
     name: Optional[str] = None
+    emergency_contact_email: Optional[str] = None
 
 
 class EmergencyContactCreate(BaseModel):

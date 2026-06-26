@@ -37,7 +37,7 @@ const config: Config = {
           DEFAULT: "#DC2626",       // red (danger / stroke alert)
           light: "#FEF2F2",         // light red tint
         },
-        "gray-warm": "#57534E",     // muted text (warm medium gray — darkened for WCAG AA contrast)
+        "gray-warm": "#57534E",     // muted text (warm medium gray, darkened for WCAG AA contrast)
         "warm-border": "#E8DDD5",   // subtle borders
         surface: "#FFFFFF",         // card / surface bg
         // Warm palette (replaces navy)

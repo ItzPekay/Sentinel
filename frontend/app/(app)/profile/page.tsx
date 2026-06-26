@@ -104,7 +104,7 @@ export default function ProfilePage() {
           </div>
 
           <div>
-            <p className="font-playfair text-xl font-bold text-[#1C1410]">{user?.name ?? "—"}</p>
+            <p className="font-playfair text-xl font-bold text-[#1C1410]">{user?.name ?? ""}</p>
             <p className="text-sm text-gray-warm">{user?.email}</p>
             <div className="mt-2 flex items-center gap-1.5">
               <Shield className="h-3 w-3 text-emerald-600" />

@@ -55,3 +55,4 @@ class PredictionResponse(BaseModel):
     source: Literal["upload", "live_frame"]
     db_record_id: str
     created_at: datetime
+    alert_sent: bool = False

@@ -22,6 +22,7 @@ def _row_to_out(row: dict) -> UserOut:
         user_id=str(row["user_id"]),
         email=row["email"],
         name=row["name"],
+        emergency_contact_email=row.get("emergency_contact_email"),
     )
 
 

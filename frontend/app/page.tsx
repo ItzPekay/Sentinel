@@ -21,7 +21,7 @@ const MODULES = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82V15.18a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
       </svg>
     ),
-    label: "Camera Feed", value: "—", unit: "live",
+    label: "Camera Feed", value: "on", unit: "live",
     status: "Clear", statusColor: "#059669", statusBg: "#ECFDF5", statusBorder: "#A7F3D0",
     color: "#0EA5E9", bg: "#F0F9FF",
   },
@@ -46,7 +46,7 @@ const STEPS = [
       </svg>
     ),
     title: "Create your account",
-    desc: "Sign up in under a minute. Add your emergency contact — that's the person we'll reach if something looks wrong.",
+    desc: "Sign up in under a minute. Add your emergency contact, the person we'll reach if something looks wrong.",
   },
   {
     num: "02",
@@ -66,7 +66,7 @@ const STEPS = [
       </svg>
     ),
     title: "We alert the right people",
-    desc: "If Sentinel spots something serious, it emails your emergency contact instantly — with a full report.",
+    desc: "If Sentinel spots something serious, it emails your emergency contact right away with a full report.",
   },
 ]
 
@@ -86,7 +86,7 @@ const FEATURES = [
       </svg>
     ),
     title: "Speech Analysis",
-    desc: "Say one phrase. Sentinel transcribes it and scores it against a reference in under 2 seconds — slurring is one of the earliest stroke signs.",
+    desc: "Say one phrase. Sentinel transcribes it and scores it against a reference in under 2 seconds. Slurring is one of the first signs of a stroke.",
   },
   {
     color: "#0EA5E9", bg: "#F0F9FF", border: "#BAE6FD",
@@ -107,7 +107,7 @@ const FEATURES = [
       </svg>
     ),
     title: "Camera Detection",
-    desc: "A YOLOv8 model watches your Raspberry Pi camera feed for facial asymmetry and drooping — classic visual stroke signs that a person might miss.",
+    desc: "A YOLOv8 model watches your Raspberry Pi camera feed for facial asymmetry and drooping, classic visual signs of a stroke that are easy to miss.",
   },
   {
     color: "#7C3AED", bg: "#F5F3FF", border: "#C4B5FD",
@@ -151,14 +151,9 @@ export default function LandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#EDE5D8]" style={{ background: "rgba(253,250,246,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2.5">
-            <motion.div
-              className="h-8 w-8 rounded-xl bg-[#E85D04] flex items-center justify-center"
-              whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            >
-              <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" fill="currentColor">
-                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+            <motion.div whileHover={{ scale: 1.08 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Sentinel" width={32} height={32} className="object-contain" />
             </motion.div>
             <span className="font-playfair text-[17px] font-bold text-[#1C1410] tracking-tight">Sentinel</span>
           </div>
@@ -222,7 +217,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.5, ease: [0.0, 0.0, 0.2, 1] }}
                 >
-                  Sentinel watches over your health around the clock — listening for slurred speech,
+                  Sentinel watches over your health around the clock, listening for slurred speech,
                   watching your camera feed, and tracking blood glucose. One alert can save a life.
                 </motion.p>
 
@@ -415,7 +410,7 @@ export default function LandingPage() {
             <motion.div variants={fadeUp} className="text-center mb-12">
               <h2 className="font-playfair text-4xl font-bold text-[#1C1410]">Three ways to stay safe.</h2>
               <p className="mt-3 text-[#57534E] max-w-md mx-auto text-sm leading-relaxed">
-                Sentinel combines three independent signals to catch stroke risk early — any one of them alone is useful, together they&apos;re powerful.
+                Sentinel combines three independent signals to catch stroke risk early. Any one of them alone helps; together they&apos;re powerful.
               </p>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -465,11 +460,8 @@ export default function LandingPage() {
       <footer className="border-t border-[#EDE5D8] py-8 px-6">
         <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-lg bg-[#E85D04] flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-white" fill="currentColor">
-                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Sentinel" width={24} height={24} className="object-contain" />
             <span className="font-playfair font-bold text-[#1C1410] text-sm">Sentinel</span>
           </div>
           <p className="text-xs text-[#57534E]">© 2024 Sentinel · Your health data is encrypted and never sold</p>

@@ -76,6 +76,7 @@ export interface PredictionResponse {
   source: "upload" | "live_frame"
   db_record_id: string
   created_at: string
+  alert_sent: boolean
 }
 
 export interface StrokeHistoryRecord {

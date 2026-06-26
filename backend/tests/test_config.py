@@ -21,6 +21,8 @@ def test_allowed_origins_parses_comma_separated(monkeypatch):
 
 def test_allowed_origins_defaults_to_wildcard(monkeypatch):
     monkeypatch.delenv("ALLOWED_ORIGINS", raising=False)
+    import dotenv
+    monkeypatch.setattr(dotenv, "load_dotenv", lambda *a, **kw: None)
     import app.services.config_service as cfg
     importlib.reload(cfg)
     assert cfg.ALLOWED_ORIGINS == ["*"]

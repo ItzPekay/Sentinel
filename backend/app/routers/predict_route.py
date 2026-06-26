@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -7,8 +8,10 @@ from app import state
 from app.dependencies import get_current_user
 from app.models.response import DetectionItem, PredictionResponse
 from app.models.user import TokenData
-from app.services import database_service
+from app.services import config_service, contact_service, database_service
 from app.services.stroke_model import StrokeModel
+
+_STROKE_CONFIDENCE_THRESHOLD = 0.7
 
 router = APIRouter(prefix="/predict", tags=["Stroke Prediction"])
 
@@ -55,6 +58,22 @@ async def predict(
     except Exception:
         db_record_id = "LOCAL_MOCK_ID"
 
+    alert_sent = False
+    if result["confidence"] >= _STROKE_CONFIDENCE_THRESHOLD:
+        contacts = database_service.get_emergency_contacts(current_user.user_id)
+        for contact in contacts:
+            try:
+                await asyncio.to_thread(
+                    contact_service.create_report,
+                    contact["email"],
+                    result["confidence"] * 100,
+                    current_user.email,
+                    True,
+                )
+                alert_sent = True
+            except Exception as e:
+                config_service.logger.error(f"[Alert] Predict email to {contact['email']} failed: {e}")
+
     return PredictionResponse(
         label=result["label"],
         confidence=result["confidence"],
@@ -62,4 +81,5 @@ async def predict(
         source=source,
         db_record_id=db_record_id,
         created_at=datetime.now(timezone.utc),
+        alert_sent=alert_sent,
     )

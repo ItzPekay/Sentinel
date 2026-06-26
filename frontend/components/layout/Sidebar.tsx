@@ -18,12 +18,11 @@ export function Sidebar() {
   return (
     <aside className="hidden md:flex fixed left-0 top-0 h-screen w-60 flex-col z-20 bg-white border-r border-warm-border shadow-[1px_0_0_0_#E8DDD5]">
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-warm-border">
+      <div className="px-6 py-5 border-b border-warm-border">
         <div className="flex items-center gap-2.5">
-          <div className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-[#E85D04] to-[#C2410C] flex items-center justify-center shadow-glow flex-shrink-0">
-            <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] text-white" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+          <div className="relative flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Sentinel" width={36} height={36} className="object-contain" />
             <div className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white animate-live" />
           </div>
           <div>

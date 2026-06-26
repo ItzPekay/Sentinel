@@ -1,5 +1,6 @@
 "use client"
 import { useCallback, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Mic, RotateCcw, Phone, CheckCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAudioRecorder } from "@/lib/hooks/useAudioRecorder"
@@ -131,6 +132,7 @@ function CommandResultCard({ result }: { result: CommandResponse }) {
 type Mode = "analyze" | "command"
 
 export default function SpeechPage() {
+  const router = useRouter()
   const { state, waveformData, elapsed, error, start, stop, reset } = useAudioRecorder()
   const [mode, setMode] = useState<Mode>("analyze")
   const [result, setResult] = useState<SpeechAnalysisResponse | null>(null)
@@ -149,6 +151,9 @@ export default function SpeechPage() {
       if (mode === "analyze") {
         const res = await api.speech.analyze(blob, `recording-${Date.now()}.webm`)
         setResult(res)
+        if (res.data.classification === "Stroke") {
+          router.push("/emergency-check")
+        }
       } else {
         const res = await api.speech.command(blob, `command-${Date.now()}.webm`)
         setCmdResult(res)
