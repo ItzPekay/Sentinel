@@ -14,7 +14,7 @@ class StrokeModel:
 
     def predict(self, image_bytes: bytes) -> dict:
         image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        results = self.model(np.array(image), verbose=False)
+        results = self.model(np.array(image), verbose=False, conf=0.1)
 
         detections = []
         top_confidence = 0.0
@@ -35,4 +35,5 @@ class StrokeModel:
                     top_confidence = conf
                     top_label = label
 
+        logger.info(f"[StrokeModel] result: label={top_label} conf={top_confidence:.4f} detections={len(detections)}")
         return {"label": top_label, "confidence": top_confidence, "detections": detections}

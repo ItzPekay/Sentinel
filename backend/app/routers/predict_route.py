@@ -46,6 +46,7 @@ async def predict(
         raise HTTPException(status_code=503, detail="No frame available — upload an image or wait for camera feed")
 
     result = model.predict(image_bytes)
+    config_service.logger.info(f"[Predict] source={source} label={result['label']} conf={result['confidence']:.4f} boxes={len(result['detections'])}")
 
     try:
         db_record = database_service.save_prediction(

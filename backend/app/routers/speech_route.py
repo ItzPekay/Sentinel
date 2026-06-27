@@ -14,7 +14,7 @@ from app.models.response import (
     SpeechAnalysisResponse,
     SpeechData,
 )
-from app.services import config_service, contact_service
+from app.services import config_service, contact_service, database_service
 from app.services.database_service import (
     append_blood_sugar_record,
     append_voice_command_record,
@@ -196,12 +196,14 @@ async def submit_blood_sugar_data(
 
     if analysis["contact_family"]:
         contacts = get_emergency_contacts(patient_id)
+        user_row = database_service.get_user_by_id(patient_id)
+        client_name = user_row["name"] if user_row and user_row.get("name") else current_user.email
         for contact in contacts:
             background_tasks.add_task(
                 contact_service.create_report,
                 contact["email"],
                 0.0,
-                current_user.email,
+                client_name,
                 False,
                 glucose_value,
             )
