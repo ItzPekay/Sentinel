@@ -56,7 +56,7 @@ def parse_blood_glucose(glucose: float) -> dict:
                 "Proceed with standard stroke assessment (FAST criteria, imaging)."
             ),
             "emergency_services": False,
-            "contact_family": True,
+            "contact_family": False,
         }
 
     elif glucose <= 125:
@@ -68,7 +68,7 @@ def parse_blood_glucose(glucose: float) -> dict:
                 "Flag glucose for follow-up; focus evaluation on stroke or TIA."
             ),
             "emergency_services": False,
-            "contact_family": True,
+            "contact_family": False,
         }
 
     elif glucose <= 179:

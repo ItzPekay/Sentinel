@@ -12,6 +12,7 @@ from app.services import config_service, contact_service, database_service
 from app.services.stroke_model import StrokeModel
 
 _STROKE_CONFIDENCE_THRESHOLD = 0.7
+_STROKE_LABELS = {"Stroke"}  # class names from best.pt: {0: 'Stroke', 1: 'NonStroke'}
 
 router = APIRouter(prefix="/predict", tags=["Stroke Prediction"])
 
@@ -59,7 +60,7 @@ async def predict(
         db_record_id = "LOCAL_MOCK_ID"
 
     alert_sent = False
-    if result["confidence"] >= _STROKE_CONFIDENCE_THRESHOLD:
+    if result["label"] in _STROKE_LABELS and result["confidence"] >= _STROKE_CONFIDENCE_THRESHOLD:
         contacts = database_service.get_emergency_contacts(current_user.user_id)
         for contact in contacts:
             try:

@@ -79,9 +79,12 @@ GEMINI.md
 .continue/
 .superpowers/
 .claude/
+.windsurf/
+.codeium/
+.gemini/
+*.cursorrules
 
 # Docs / markdown
-README.md
 docs/
 
 # Node / Next.js

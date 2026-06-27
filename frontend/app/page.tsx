@@ -464,7 +464,7 @@ export default function LandingPage() {
             <img src="/logo.png" alt="Sentinel" width={24} height={24} className="object-contain" />
             <span className="font-playfair font-bold text-[#1C1410] text-sm">Sentinel</span>
           </div>
-          <p className="text-xs text-[#57534E]">© 2024 Sentinel · Your health data is encrypted and never sold</p>
+          <p className="text-xs text-[#57534E]">© 2026 Sentinel · Your health data is encrypted and never sold</p>
         </div>
       </footer>
     </div>

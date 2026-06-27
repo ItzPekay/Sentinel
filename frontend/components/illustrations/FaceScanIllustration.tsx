@@ -50,12 +50,12 @@ export function FaceScanIllustration({ className = "", size = 200 }: Props) {
         <rect x="74" y="142" width="52" height="22" rx="4" stroke="#0EA5E9" strokeWidth="0.7" strokeOpacity="0.3" fill="none" strokeDasharray="3 2" />
 
         {/* Animated scan line */}
-        <motion.line
-          x1="38" y1="18" x2="162" y2="18"
-          stroke="#0EA5E9" strokeWidth="1.5" strokeOpacity="0.55"
-          animate={{ y1: [18, 202, 18], y2: [18, 202, 18] }}
+        <motion.g
+          animate={{ y: [0, 184, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        />
+        >
+          <line x1="38" y1="18" x2="162" y2="18" stroke="#0EA5E9" strokeWidth="1.5" strokeOpacity="0.55" />
+        </motion.g>
 
         {/* Labels */}
         <text x="20" y="12" fill="#0EA5E9" fillOpacity="0.55" style={{ fontSize: 7, fontFamily: "monospace", letterSpacing: 1 }}>FACE_SCAN</text>

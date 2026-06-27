@@ -23,7 +23,6 @@ from app.services.speech_service import SpeechService
 from app.services.stroke_model import StrokeModel
 
 app_dir = Path(__file__).resolve().parent
-snapshot_path = app_dir / "assets" / "snapshot.jpg"
 
 
 @asynccontextmanager
@@ -49,7 +48,6 @@ async def fetch_loop():
         if frame:
             state.latest_frame = frame
             consecutive_failures = 0
-            asyncio.create_task(asyncio.to_thread(snapshot_path.write_bytes, frame))
             await asyncio.sleep(0.5)
         else:
             consecutive_failures += 1

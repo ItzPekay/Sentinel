@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 logger = logging.getLogger(__name__)
 
 STANDARD_PHRASE = "the sky is blue"
-YELLOW_THRESHOLD = 40.0
+YELLOW_THRESHOLD = 50.0
 RED_THRESHOLD = 70.0
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -1,6 +1,5 @@
 "use client"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useRef } from "react"
 import { Camera, Scan, RefreshCw } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { api } from "@/lib/api"
@@ -9,8 +8,8 @@ import { FaceScanIllustration } from "@/components/illustrations/FaceScanIllustr
 import { clsx } from "clsx"
 
 export default function CameraPage() {
-  const router = useRouter()
   const [snapshot, setSnapshot] = useState<string | null>(null)
+  const snapshotUrlRef = useRef<string | null>(null)
   const [detection, setDetection] = useState<PredictionResponse | null>(null)
   const [streamError, setStreamError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -22,7 +21,10 @@ export default function CameraPage() {
       const res = await fetch("/api/camera/snapshot")
       if (!res.ok) throw new Error()
       const blob = await res.blob()
-      setSnapshot(URL.createObjectURL(blob))
+      if (snapshotUrlRef.current) URL.revokeObjectURL(snapshotUrlRef.current)
+      const url = URL.createObjectURL(blob)
+      snapshotUrlRef.current = url
+      setSnapshot(url)
       setDetection(null)
     } catch {
       alert("Could not capture snapshot.")
@@ -34,9 +36,6 @@ export default function CameraPage() {
     try {
       const result = await api.predict.run()
       setDetection(result)
-      if (result.confidence > 0.7) {
-        router.push("/emergency-check")
-      }
     } catch (e) {
       alert(e instanceof Error ? e.message : "Detection failed.")
     } finally {
@@ -46,7 +45,7 @@ export default function CameraPage() {
   }
 
   const confidencePct = detection ? Math.round(detection.confidence * 100) : 0
-  const isHighRisk = detection && detection.confidence > 0.7
+  const isHighRisk = detection && detection.label === "Stroke" && detection.confidence > 0.7
 
   return (
     <div className="space-y-6 animate-fade-up">

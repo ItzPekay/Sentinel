@@ -71,7 +71,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           {/* Footer */}
-          <p className="text-xs text-gray-warm/70">© 2024 Sentinel · Your data is encrypted and never sold</p>
+          <p className="text-xs text-gray-warm/70">© 2026 Sentinel · Your data is encrypted and never sold</p>
         </div>
       </div>
 

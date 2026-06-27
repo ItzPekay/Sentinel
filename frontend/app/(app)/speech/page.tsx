@@ -1,6 +1,5 @@
 "use client"
-import { useCallback, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useState } from "react"
 import { Mic, RotateCcw, Phone, CheckCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAudioRecorder } from "@/lib/hooks/useAudioRecorder"
@@ -132,7 +131,6 @@ function CommandResultCard({ result }: { result: CommandResponse }) {
 type Mode = "analyze" | "command"
 
 export default function SpeechPage() {
-  const router = useRouter()
   const { state, waveformData, elapsed, error, start, stop, reset } = useAudioRecorder()
   const [mode, setMode] = useState<Mode>("analyze")
   const [result, setResult] = useState<SpeechAnalysisResponse | null>(null)
@@ -151,9 +149,6 @@ export default function SpeechPage() {
       if (mode === "analyze") {
         const res = await api.speech.analyze(blob, `recording-${Date.now()}.webm`)
         setResult(res)
-        if (res.data.classification === "Stroke") {
-          router.push("/emergency-check")
-        }
       } else {
         const res = await api.speech.command(blob, `command-${Date.now()}.webm`)
         setCmdResult(res)
@@ -162,6 +157,12 @@ export default function SpeechPage() {
       setApiError(e instanceof Error ? e.message : "Processing failed")
     }
   }, [state, stop, mode])
+
+  useEffect(() => {
+    if (state === "recording" && elapsed >= 8) {
+      handleRelease()
+    }
+  }, [elapsed, state, handleRelease])
 
   function handleReset() {
     reset()
@@ -327,7 +328,7 @@ export default function SpeechPage() {
             <div className="text-center">
               {state === "idle" && (
                 <p className="text-sm text-gray-warm">
-                  {mode === "analyze" ? "Hold the button while speaking the phrase" : "Hold and say your command"}
+                  {mode === "analyze" ? "Hold the button while speaking the phrase (max 8s)" : "Hold and say your command (max 8s)"}
                 </p>
               )}
               {state === "recording" && <p className="text-sm font-semibold text-[#E85D04] animate-pulse">Recording… release when done</p>}

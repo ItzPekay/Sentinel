@@ -12,7 +12,12 @@ class SpeechService:
         self.model = WhisperModel("base", device="cpu", compute_type="int8")
 
     def transcribe_audio(self, file_path: str) -> str:
-        segments, _ = self.model.transcribe(file_path)
+        segments, _ = self.model.transcribe(
+            file_path,
+            language="en",
+            beam_size=1,
+            condition_on_previous_text=False,
+        )
         return " ".join(s.text for s in segments).strip().lower()
 
     def clean_text(self, text: str) -> str:
@@ -20,35 +25,46 @@ class SpeechService:
 
     def analyze_transcription(self, audio_path: str) -> tuple[float, str]:
         transcribed_text = self.transcribe_audio(audio_path)
-        expected_words = config_service.STANDARD_PHRASE.split()
-        heard_words = transcribed_text.split()
+        expected_words = self.clean_text(config_service.STANDARD_PHRASE).split()
+        heard_words = self.clean_text(transcribed_text).split()
 
-        matched = 0
-        for i, expected_word in enumerate(expected_words):
-            if i < len(heard_words):
-                heard_word = heard_words[i]
-                if expected_word in heard_word or heard_word in expected_word:
-                    matched += 1
+        if not heard_words:
+            return 50.0, transcribed_text  # neutral — couldn't hear anything
 
-        match_pct = 0.0 if not expected_words else (matched / len(expected_words)) * 100.0
+        # Sliding window: find the best positional alignment within heard_words
+        # (handles Whisper prefix hallucinations without losing positional strictness)
+        best_matched = 0
+        for start in range(len(heard_words)):
+            matched = 0
+            for i, exp in enumerate(expected_words):
+                if start + i < len(heard_words):
+                    hw = heard_words[start + i]
+                    if exp in hw or hw in exp:
+                        matched += 1
+            best_matched = max(best_matched, matched)
+
+        match_pct = (best_matched / len(expected_words)) * 100.0
         return float(100.0 - match_pct), transcribed_text
 
     def analyze_audio_features(self, audio_path: str) -> float:
         audio, sr = librosa.load(audio_path, sr=16000)
+        audio, _ = librosa.effects.trim(audio, top_db=20)  # strip lead-in/trail-out silence
         hop_length = 512
         energy = librosa.feature.rms(y=audio, hop_length=hop_length)[0]
         peaks, _ = find_peaks(energy, height=np.mean(energy), distance=5)
         duration = len(audio) / sr
         syllables_per_second = len(peaks) / duration if duration > 0 else 0
 
-        if syllables_per_second < 2.0:
+        if syllables_per_second < 0.7:
             return 80.0
-        if syllables_per_second < 3.0:
+        if syllables_per_second < 1.5:
             return 40.0
         return 10.0
 
     def evaluate_risk_and_alerts(self, transcription_score: float, audio_score: float) -> tuple[str, float, dict]:
-        final_score = (transcription_score + audio_score) / 2.0
+        # max() instead of average: one bad signal should be enough to flag risk.
+        # Averaging let a 0.0 transcription score cancel out an 80.0 audio score → always Non Stroke.
+        final_score = max(transcription_score, audio_score)
         alert_payload = {
             "trigger_alarm": False,
             "alert_level": "GREEN",
